@@ -85,7 +85,7 @@ getMonthData = function(month, done){
             processCountablesDays(weekData.week);
             monthWeeks.push(weekData.week);
         };
-        if(weekData.final) done(month, monthWeeks);
+        if(weekData.final) done(month, monthWeeks.reverse());
     }
     let weekInit = cronosUtil.getInitialWeek(month);
     search.searchDaysFromWeek(weekInit> 0? weekInit * -1: weekInit, month, processWeek, null);
@@ -97,7 +97,7 @@ let twiceLastMonth = lastMonth > 0? lastMonth - 1: 11;
 
 buildMonthReport = function(month, monthWeeks){
     monthReport = `<center><h1>Mês ${cronosUtil.getMonthName(month)}</h1>`;
-    monthWeeks.reverse().forEach(w => { monthReport += getWeekReport(w); })
+    monthWeeks.forEach(w => { monthReport += getWeekReport(w); })
     return monthReport + "</center>";
 }
 

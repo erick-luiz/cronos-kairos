@@ -84,7 +84,7 @@ getMonthData = function getMonthData(month, done) {
     }
 
     ;
-    if (weekData.final) done(month, monthWeeks);
+    if (weekData.final) done(month, monthWeeks.reverse());
   };
 
   var weekInit = cronosUtil.getInitialWeek(month);
@@ -97,7 +97,7 @@ var twiceLastMonth = lastMonth > 0 ? lastMonth - 1 : 11;
 
 buildMonthReport = function buildMonthReport(month, monthWeeks) {
   monthReport = "<center><h1>M\xEAs ".concat(cronosUtil.getMonthName(month), "</h1>");
-  monthWeeks.reverse().forEach(function (w) {
+  monthWeeks.forEach(function (w) {
     monthReport += getWeekReport(w);
   });
   return monthReport + "</center>";
