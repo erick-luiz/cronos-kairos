@@ -79,13 +79,27 @@ processCountablesDays = (week) => {
 getMonthData = function(month, done){
 
     let monthWeeks = [];
-
+    let days = [];
     let processWeek = function(weekData) {
-        if(weekData.week.length > 0 && isValidWeek(weekData.week)){
+        if(weekData.week.length > 0){
             processCountablesDays(weekData.week);
-            monthWeeks.push(weekData.week);
+            days = days.concat(weekData.week);
         };
-        if(weekData.final) done(month, monthWeeks.reverse());
+        if(weekData.final) {
+            let week = []
+            // days.reverse();
+            // days.sort(function(a, b){return a.dayOfWeek - b.dayOfWeek}); 
+            days.sort(function(a, b){return a.day - b.day})
+            .forEach(d => {
+                week.push(d);
+                if(d.dayOfWeek == 0){
+                    if(isValidWeek(week)) monthWeeks.push(week);
+                    week = [];
+                }
+            });
+            // monthWeeks.push(weekData.week);
+            done(month, monthWeeks);
+        }
     }
     let weekInit = cronosUtil.getInitialWeek(month);
     search.searchDaysFromWeek(weekInit> 0? weekInit * -1: weekInit, month, processWeek, null);

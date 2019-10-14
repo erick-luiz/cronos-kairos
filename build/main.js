@@ -1,5 +1,7 @@
 "use strict";
 
+require("core-js/modules/es6.array.sort");
+
 formatNumber = function formatNumber(n) {
   return ("0" + n).slice(-2);
 };
@@ -76,15 +78,33 @@ processCountablesDays = function processCountablesDays(week) {
 
 getMonthData = function getMonthData(month, done) {
   var monthWeeks = [];
+  var days = [];
 
   var processWeek = function processWeek(weekData) {
-    if (weekData.week.length > 0 && isValidWeek(weekData.week)) {
+    if (weekData.week.length > 0) {
       processCountablesDays(weekData.week);
-      monthWeeks.push(weekData.week);
+      days = days.concat(weekData.week);
     }
 
     ;
-    if (weekData.final) done(month, monthWeeks.reverse());
+
+    if (weekData.final) {
+      var week = []; // days.reverse();
+      // days.sort(function(a, b){return a.dayOfWeek - b.dayOfWeek}); 
+
+      days.sort(function (a, b) {
+        return a.day - b.day;
+      }).forEach(function (d) {
+        week.push(d);
+
+        if (d.dayOfWeek == 0) {
+          if (isValidWeek(week)) monthWeeks.push(week);
+          week = [];
+        }
+      }); // monthWeeks.push(weekData.week);
+
+      done(month, monthWeeks);
+    }
   };
 
   var weekInit = cronosUtil.getInitialWeek(month);
