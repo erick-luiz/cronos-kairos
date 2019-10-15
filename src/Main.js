@@ -116,6 +116,11 @@ buildMonthReport = function(month, monthWeeks){
 }
 
 enableBtn = btn => btn.disabled = false;
+changeByPlusButton = btn => btn.classList.add("PlusButton");
+processButton = btn => {
+    enableBtn(btn);
+    changeByPlusButton(btn);
+}
 
 buildButton = function(btn, month, content) {
     btn.addEventListener("click", function(month, content){
@@ -133,7 +138,7 @@ getMonthData(month,function(month, monthWeeks){
             buildMonthReport(month, monthWeeks));
         PDF.print();
     });
-    enableBtn(btn);
+    processButton(btn);
 });
 
 getMonthData(lastMonth, function(month, monthWeeks){
@@ -144,7 +149,7 @@ getMonthData(lastMonth, function(month, monthWeeks){
             buildMonthReport(lastMonth, monthWeeks));
         PDF.print();
     });
-    enableBtn(btn);
+    processButton(btn);
 });
 
 getMonthData(twiceLastMonth, function(month, monthWeeks){
@@ -155,5 +160,5 @@ getMonthData(twiceLastMonth, function(month, monthWeeks){
             buildMonthReport(twiceLastMonth, monthWeeks));
         PDF.print();
     });
-    enableBtn(btn);
+    processButton(btn);
 });

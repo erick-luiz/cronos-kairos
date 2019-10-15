@@ -13,9 +13,10 @@ let viewManager = (function(){
             <i class="fa fa-pencil"></i>
             </div>
             <div style="float:left;  width:98%; background-color:#fff">        <div style="padding: 10px">
-                <br>${buttonTemplate(cronosUtil.getCurrentMonth())}
-                ${buttonTemplate(cronosUtil.getLastMonth())}
+                <br>
                 ${buttonTemplate(cronosUtil.getTwiceLastMonth())}
+                ${buttonTemplate(cronosUtil.getLastMonth())}
+                ${buttonTemplate(cronosUtil.getCurrentMonth())}
                 </div>
                 </div>
             
