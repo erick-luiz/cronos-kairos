@@ -4,6 +4,7 @@ var input =  [
 	'./build/resetJs.js',
 	'./build/EvaluatorHolidays.js',
 	'./build/PDF.js',
+	'./build/PeriodUtils.js',
 	'./build/CronosUtils.js',
 	'./build/ViewManager.js',
 	'./build/Cronos.js',

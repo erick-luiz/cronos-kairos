@@ -52,6 +52,7 @@ var search = (function (w){
             formatedEN:data.replace(/(\d{2})\/(\d{2})\/(\d{4})/,"$3-$1-$2"),
             formatedPT:data.replace(/(\d{2})\/(\d{2})\/(\d{4})/,"$2/$1/$3"),
             date: data,
+            start: start,
             isHoliday: evaluatorHoliday.verifyDate(start),
             countableDay: false,
             dayOfWeek: start.getDay(),
@@ -84,6 +85,20 @@ var search = (function (w){
         }
         return false;
     }
+    
+    var getShorterDate = function(listDays){
+        let date = listDays[0];
+        listDays.forEach(day => {
+            if(day.start < date) date = day.start;
+        });
+        return date? date.start: null;
+    }
+
+    var getPeriod = function(lastDay, period){
+        if(lastDay == null) return period;
+        let date = new Date(lastDay.getMonth(),lastDay.getDay() - 1,lastDay.getYear());
+        return periodUtils.getPeriod(date, period);
+    }
 
     var getAccumulationWeek = function(week){
         var value = 0;
@@ -95,8 +110,14 @@ var search = (function (w){
         return {accumulation: value, hour: parseInt(value/60), min: value%60 };
     }
 
-    var searchDaysFromWeek = function(week, month, done, err){
+    var searchDaysFromWeek = function(period, week, month, done, err){
+        if(week < -12){
+            week = 1;
+            period = w.dtoPessoaApontamentos.IdPeriodo - 1;
+        }
         w.dtoPessoaApontamentos.Week = week;
+        w.dtoPessoaApontamentos.IdPeriodo = period;
+
         var self = this;
         var list = [];
         $.ajax({
@@ -111,7 +132,15 @@ var search = (function (w){
 
                 list = list.concat(processDays(formattedData, month));
                 if(!containInitDate(list, month)) {
-                    searchDaysFromWeek(week-1,month, done)
+
+                    // var newPeriod = getPeriod(getShorterDate(list), w.dtoPessoaApontamentos.IdPeriodo);
+
+                    //console.log(w.dtoPessoaApontamentos.IdPeriodo, period , getPeriod(getShorterDate(list), w.dtoPessoaApontamentos.IdPeriodo), list, getShorterDate(list));
+
+
+                    // if(newPeriod < period) week = 1;
+                    
+                    searchDaysFromWeek(period, week-1,month, done)
                     done({week:list, final: false});
                 }else{
                     done({week:list, final:true});

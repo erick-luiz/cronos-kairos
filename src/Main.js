@@ -85,6 +85,7 @@ getMonthData = function(month, done){
             processCountablesDays(weekData.week);
             days = days.concat(weekData.week);
         };
+        // console.log(days);
         if(weekData.final) {
             let week = []
             // days.reverse();
@@ -92,7 +93,7 @@ getMonthData = function(month, done){
             days.sort(function(a, b){return a.day - b.day})
             .forEach(d => {
                 week.push(d);
-                if(d.dayOfWeek == 0){
+                if(d.dayOfWeek == 0 || d == days[days.length - 1]){
                     if(isValidWeek(week)) monthWeeks.push(week);
                     week = [];
                 }
@@ -102,7 +103,7 @@ getMonthData = function(month, done){
         }
     }
     let weekInit = cronosUtil.getInitialWeek(month);
-    search.searchDaysFromWeek(weekInit> 0? weekInit * -1: weekInit, month, processWeek, null);
+    search.searchDaysFromWeek(periodUtils.getPeriod(new Date()) ,weekInit> 1? weekInit * -1: weekInit, month, processWeek, null);
 }
 
 let month = new Date().getMonth() + 1;
@@ -132,7 +133,6 @@ buildButton = function(btn, month, content) {
 
 getMonthData(month,function(month, monthWeeks){
     let btn = viewManager.btnCurrentMonth;
-
     btn.addEventListener("click", function(){
         PDF.generate("",`Relatório de ${cronosUtil.getMonthName(month)}`,
             buildMonthReport(month, monthWeeks));
@@ -154,7 +154,6 @@ getMonthData(lastMonth, function(month, monthWeeks){
 
 getMonthData(twiceLastMonth, function(month, monthWeeks){
     let btn = viewManager.btnTwiceLastMonth;
-    
     btn.addEventListener("click", function(){
         PDF.generate("",`Relatório de ${cronosUtil.getMonthName(twiceLastMonth)}`,
             buildMonthReport(twiceLastMonth, monthWeeks));
