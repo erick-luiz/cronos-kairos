@@ -102,13 +102,16 @@ getMonthData = function(month, done){
             done(month, monthWeeks);
         }
     }
+
     let weekInit = cronosUtil.getInitialWeek(month);
-    search.searchDaysFromWeek(periodUtils.getPeriod(new Date()) ,weekInit> 1? weekInit * -1: weekInit, month, processWeek, null);
+    let period = PeriodManager.getPeriod(new Date().withMonth(month).withDay(28).adjustYear(month));
+
+    search.searchDaysFromWeek(period, 0, month, processWeek, null);
 }
 
 let month = new Date().getMonth() + 1;
-let lastMonth = month > 0? month - 1: 11;
-let twiceLastMonth = lastMonth > 0? lastMonth - 1: 11;
+let lastMonth = month == 1? 12 :month - 1;
+let twiceLastMonth = lastMonth == 1? 12: lastMonth -1;
 
 buildMonthReport = function(month, monthWeeks){
     monthReport = `<center><h1>Mês ${cronosUtil.getMonthName(month)}</h1>`;
@@ -130,15 +133,19 @@ buildButton = function(btn, month, content) {
     });
 }
 
-
-getMonthData(month,function(month, monthWeeks){
+getMonthData(month, function(month, monthWeeks){
     let btn = viewManager.btnCurrentMonth;
+    let accSpan = viewManager.monthAccumulation;
     btn.addEventListener("click", function(){
         PDF.generate("",`Relatório de ${cronosUtil.getMonthName(month)}`,
             buildMonthReport(month, monthWeeks));
         PDF.print();
     });
     processButton(btn);
+    var acc = search.getAccumulation(monthWeeks);
+    
+    accSpan.innerHTML  = (acc.saldo < 0? "Devendo - ": "Sobrando -") + acc.saldoHour + ":" + acc.saldoMin + "h";
+
 });
 
 getMonthData(lastMonth, function(month, monthWeeks){

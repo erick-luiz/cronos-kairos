@@ -18,6 +18,7 @@ let viewManager = (function(){
                 ${buttonTemplate(cronosUtil.getLastMonth())}
                 ${buttonTemplate(cronosUtil.getCurrentMonth())}
                 </div>
+                saldo do Mês: <span id="month-acc"></span>
                 </div>
             
     </div></div>`;
@@ -28,11 +29,13 @@ let viewManager = (function(){
     let btnCurrentMonth = document.querySelector("#Month-"+cronosUtil.getCurrentMonth());
     let btnLastMonth = document.querySelector("#Month-"+cronosUtil.getLastMonth());
     let btnTwiceLastMonth = document.querySelector("#Month-"+cronosUtil.getTwiceLastMonth());
+    let monthAccumulation = document.querySelector("#month-acc");
 
     return {
         btnCurrentMonth:btnCurrentMonth,
         btnLastMonth:btnLastMonth,
-        btnTwiceLastMonth:btnTwiceLastMonth
+        btnTwiceLastMonth:btnTwiceLastMonth,
+        monthAccumulation:monthAccumulation
     }
 
 })();

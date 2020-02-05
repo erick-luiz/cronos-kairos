@@ -1,4 +1,4 @@
-var search = (function (w){
+var search = (function (w, periodManager){
     'use strict';
 
     let formatNumber = (n) => ("0" + n).slice(-2);  
@@ -110,11 +110,41 @@ var search = (function (w){
         return {accumulation: value, hour: parseInt(value/60), min: value%60 };
     }
 
-    var searchDaysFromWeek = function(period, week, month, done, err){
-        if(week < -12){
-            week = 1;
-            period = w.dtoPessoaApontamentos.IdPeriodo - 1;
+    var getAccumulation = function(weeks){
+        var monthDays = [];
+        for(var i = 0; i < weeks.length; i++){
+            for(var x = 0; x < weeks[i].length; x++){
+                monthDays.push(weeks[i][x]);
+            }
         }
+
+        var value = 0;
+        var contableDays = 0;
+        for(var i = 0; i < monthDays.length; i++){
+            if(monthDays[i] && monthDays[i].accumulation) {
+                value += monthDays[i].accumulation * 1;
+            }
+
+            if(monthDays[i] && monthDays[i].countableDay) contableDays += 1;
+        }
+
+        var needed = getWeekNeedTime(contableDays);
+        var saldo = value - needed;
+        return {
+            accumulation: value, 
+            hour: parseInt(value/60), 
+            min: value%60,
+            needed: needed,
+            neededHour: parseInt(needed/60),
+            neededMin: needed%60,
+            saldo: saldo,
+            saldoHour: Math.abs(parseInt(saldo/60)),
+            saldoMin: Math.abs(saldo%60)
+        };
+    }
+
+    var searchDaysFromWeek = function(period, week, month, done, err){
+
         w.dtoPessoaApontamentos.Week = week;
         w.dtoPessoaApontamentos.IdPeriodo = period;
 
@@ -133,6 +163,14 @@ var search = (function (w){
                 list = list.concat(processDays(formattedData, month));
                 if(!containInitDate(list, month)) {
 
+                    if(list.length > 0){
+                        list.sort((d,d2) => d2.day - d.day);
+                        var nextDate = new Date(list[0].start);
+                        nextDate.minusDay();
+                        var newPeriod = periodManager.getPeriod(nextDate);
+                        if(period != newPeriod) week = 1;
+                        period = newPeriod;
+                    }
                     // var newPeriod = getPeriod(getShorterDate(list), w.dtoPessoaApontamentos.IdPeriodo);
 
                     //console.log(w.dtoPessoaApontamentos.IdPeriodo, period , getPeriod(getShorterDate(list), w.dtoPessoaApontamentos.IdPeriodo), list, getShorterDate(list));
@@ -159,7 +197,8 @@ var search = (function (w){
 
     return {
         searchDaysFromWeek: searchDaysFromWeek,
-        getAccumulationWeek: getAccumulationWeek
+        getAccumulationWeek: getAccumulationWeek,
+        getAccumulation:getAccumulation
     }
 
-})(window);
+})(window, PeriodManager);
