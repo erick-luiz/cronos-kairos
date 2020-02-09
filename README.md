@@ -18,7 +18,7 @@ O plugin gera o relatório de horas por semana dos ultimos três meses - incluin
 
 Não é uma atividade simples resgatar os dados mensais dos últimos três meses de um user, por isso ao acessar a página os botões de relatório estarão desativados, assim que o relatório de determinado mês for carregado o seu respectivo botão se ativa. Note que este processo é assíncrono, e por isso não à ordem definida para o fim do processo. 
 
-![Menu da Aplicação](https://raw.githubusercontent.com/erickLFLopes/cronos-kairos/master/doc/img/menu.png)
+![Menu da Aplicação](https://raw.githubusercontent.com/erickLFLopes/cronos-kairos/master/doc/img/menu_v2.png)
 
 Após  clicar em um dos botões para gerar o relatório será aberta uma janela onde você terá o mês dividido em semanas e com as horas de determinada semana contabilizadas, como a exibida a seguir: 
 

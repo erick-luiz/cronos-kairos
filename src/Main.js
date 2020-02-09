@@ -133,19 +133,22 @@ buildButton = function(btn, month, content) {
     });
 }
 
+processMonthInfo = (element, monthWeeks) => {
+    var acc = search.getAccumulation(monthWeeks);
+    element.innerHTML  = (acc.saldo < 0? "-": "+") + acc.saldoHour + "h e " + acc.saldoMin + "min";
+    element.style.color = acc.saldo < 0? "red": "green";
+}
+
 getMonthData(month, function(month, monthWeeks){
     let btn = viewManager.btnCurrentMonth;
-    let accSpan = viewManager.monthAccumulation;
+
     btn.addEventListener("click", function(){
         PDF.generate("",`Relatório de ${cronosUtil.getMonthName(month)}`,
             buildMonthReport(month, monthWeeks));
         PDF.print();
     });
     processButton(btn);
-    var acc = search.getAccumulation(monthWeeks);
-    
-    accSpan.innerHTML  = (acc.saldo < 0? "Devendo - ": "Sobrando -") + acc.saldoHour + ":" + acc.saldoMin + "h";
-
+    processMonthInfo(viewManager.monthAccumulation, monthWeeks);
 });
 
 getMonthData(lastMonth, function(month, monthWeeks){
@@ -157,6 +160,8 @@ getMonthData(lastMonth, function(month, monthWeeks){
         PDF.print();
     });
     processButton(btn);
+    processMonthInfo(viewManager.lastMonthAccumulation, monthWeeks);
+
 });
 
 getMonthData(twiceLastMonth, function(month, monthWeeks){
