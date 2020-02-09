@@ -3,11 +3,13 @@ Plugin para gerar relatório de Horas do Mês no Kairos (dimepkairos)
 
 # Para usar
 
-* Você pode instalar através do link, para isto: clique em [userScript](https://raw.githubusercontent.com/erickLFLopes/cronos-kairos/master/cronos.user.js)
+* Antes de mais nada, é preciso ter a extensão Tampermonkey instalada no navegador. [link para chrome](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=en)
 
-* Você pode fazer uma instalação manual do projeto: 
-  - Abra o kairos e acesse sua página de ponto
-  - clique no icone do tampermonkey e create a new script 
+* Você pode instalar o cronos-kairos através do link: [userScript](https://raw.githubusercontent.com/erickLFLopes/cronos-kairos/master/cronos.user.js)
+
+* Ou, Você pode fazer uma instalação manual do projeto: 
+  - Abra o navegador
+  - Clique no icone do tampermonkey e create a new script 
   - Substitua o header contido no editor por este [header](https://raw.githubusercontent.com/erickLFLopes/cronos-kairos/master/cronos-install.txt)
   - ```ctrl + s``` para salvar. 
 
