@@ -1,7 +1,7 @@
 // ==UserScript==
 // @id           Cronos Kairos
 // @name         Cronos Kairos
-// @version      1.0.1
+// @version      1.0.2
 // @description  JS Extension for Kairos
 // @author       Érick Lopes <si.erickluiz@gmail.com>
 // @source       https://github.com/erickLFLopes/cronos-kairos
