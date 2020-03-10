@@ -145,37 +145,37 @@ processMonthInfo = (element, monthWeeks) => {
     element.style.color = acc.saldo < 0? "red": "green";
 }
 
-getMonthData(month, function(month, monthWeeks){
-    let btn = viewManager.btnCurrentMonth;
 
-    btn.addEventListener("click", function(){
+let btn = viewManager.btnCurrentMonth;
+btn.addEventListener("click", function(){
+    getMonthData(month, function(month, monthWeeks){
         PDF.generate("",`Relatório de ${cronosUtil.getMonthName(month)}`,
-            buildMonthReport(month, monthWeeks));
+        buildMonthReport(month, monthWeeks));
         PDF.print();
     });
-    processButton(btn);
-    // processMonthInfo(viewManager.monthAccumulation, monthWeeks);
 });
+// processButton(btn);
+// processMonthInfo(viewManager.monthAccumulation, monthWeeks);
 
-getMonthData(lastMonth, function(month, monthWeeks){
-    
-    let btn = viewManager.btnLastMonth;
-    btn.addEventListener("click", function(){
+let btnLastMonth = viewManager.btnLastMonth;
+btnLastMonth.addEventListener("click", function(){
+    getMonthData(lastMonth, function(month, monthWeeks){
         PDF.generate("",`Relatório de ${cronosUtil.getMonthName(lastMonth)}`,
-            buildMonthReport(lastMonth, monthWeeks));
+        buildMonthReport(lastMonth, monthWeeks));
         PDF.print();
     });
-    processButton(btn);
-    // processMonthInfo(viewManager.lastMonthAccumulation, monthWeeks);
-
 });
+// processButton(btn);
+// processMonthInfo(viewManager.lastMonthAccumulation, monthWeeks);
 
-getMonthData(twiceLastMonth, function(month, monthWeeks){
-    let btn = viewManager.btnTwiceLastMonth;
-    btn.addEventListener("click", function(){
+
+let btnTwiceLastMonth = viewManager.btnTwiceLastMonth;
+btnTwiceLastMonth.addEventListener("click", function(){
+    getMonthData(twiceLastMonth, function(month, monthWeeks){
         PDF.generate("",`Relatório de ${cronosUtil.getMonthName(twiceLastMonth)}`,
             buildMonthReport(twiceLastMonth, monthWeeks));
         PDF.print();
     });
-    processButton(btn);
 });
+// processButton(btn);
+

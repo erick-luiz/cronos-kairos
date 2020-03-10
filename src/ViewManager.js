@@ -1,7 +1,7 @@
 let viewManager = (function(){
 
     let buttonTemplate = (month) => `
-            <button disabled id="Month-${month}" style="margin-rigth:1%;">
+            <button id="Month-${month}" style="margin-rigth:1%;">
                 Gerar relatório de ${cronosUtil.getMonthName(month)}
             </button>
         `;
