@@ -9,4 +9,5 @@
 // @require      https://raw.githubusercontent.com/erickLFLopes/cronos-kairos/master/bundle.min.js
 // @updateVersion   2
 // @grant        none
+// @license      MIT
 // ==/UserScript==
