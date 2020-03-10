@@ -1,20 +1,4 @@
 let viewManager = (function(){
-    
-    let reportInfo = (month, lastMonth) => `<div style="padding: 10px">
-            <div class="floatLeft" style="width: 140px; text-align: right;">
-                Saldo de ${cronosUtil.getMonthName(month)}:
-            </div>
-            <div class="floatLeft marginLeft10 bold black" id="month-acc-${month}"></div>
-            <div class="clear"></div>
-            <br>
-            <div class="floatLeft" style="width: 140px; text-align: right;">
-                Saldo de ${cronosUtil.getMonthName(lastMonth)}: 
-            </div>
-            <div class="floatLeft marginLeft10 bold black" id="month-acc-${lastMonth}"></div>
-            
-            <div class="clear"></div>
-        </div>`;
-
 
     let buttonTemplate = (month) => `
             <button disabled id="Month-${month}" style="margin-rigth:1%;">
@@ -32,7 +16,6 @@ let viewManager = (function(){
                 ${buttonTemplate(cronosUtil.getTwiceLastMonth())}
                 ${buttonTemplate(cronosUtil.getLastMonth())}
                 ${buttonTemplate(cronosUtil.getCurrentMonth())}
-                ${reportInfo(cronosUtil.getCurrentMonth(), cronosUtil.getLastMonth())}
                 </div>
                 </div>
             

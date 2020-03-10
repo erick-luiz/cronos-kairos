@@ -78,6 +78,11 @@ processCountablesDays = (week) => {
 
 getMonthData = function(month, done){
 
+    if(sessionStorage.getItem(`mes-${month}`) == undefined || 
+        sessionStorage.getItem(`mes-${month}`) == "null") {
+        done(month, JSON.parse(sessionStorage.getItem(`mes-${month}`)))
+    }
+
     let monthWeeks = [];
     let days = [];
     let processWeek = function(weekData) {
@@ -99,6 +104,7 @@ getMonthData = function(month, done){
                 }
             });
             // monthWeeks.push(weekData.week);
+            sessionStorage.setItem(`mes-${month}`,JSON.stringify(monthWeeks));
             done(month, monthWeeks);
         }
     }
@@ -148,7 +154,7 @@ getMonthData(month, function(month, monthWeeks){
         PDF.print();
     });
     processButton(btn);
-    processMonthInfo(viewManager.monthAccumulation, monthWeeks);
+    // processMonthInfo(viewManager.monthAccumulation, monthWeeks);
 });
 
 getMonthData(lastMonth, function(month, monthWeeks){
@@ -160,7 +166,7 @@ getMonthData(lastMonth, function(month, monthWeeks){
         PDF.print();
     });
     processButton(btn);
-    processMonthInfo(viewManager.lastMonthAccumulation, monthWeeks);
+    // processMonthInfo(viewManager.lastMonthAccumulation, monthWeeks);
 
 });
 
