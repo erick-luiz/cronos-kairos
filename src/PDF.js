@@ -37,9 +37,14 @@ var PDF = (function(){
         }
 
         var win  = window.open('', '', 'height='+configs.widthWindow+',width='+configs.heightWindow);
-        win.document.write(currentTamplate);
-        win.print(); 
-        win.document.close();
+        if(win){
+            win.document.write(currentTamplate);
+            win.print(); 
+            win.document.close();
+        }else {
+            GM_notification("Erro ao criar PDF", "Click novamente no botão e cancele a busca");
+        }
+        
     };
 
     function generate(style, title, data){

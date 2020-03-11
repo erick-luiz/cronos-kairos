@@ -1,13 +1,16 @@
 // ==UserScript==
 // @id           Cronos Kairos
 // @name         Cronos Kairos
-// @version      1.0.2
+// @version      1.0.3
 // @description  JS Extension for Kairos
 // @author       Érick Lopes <si.erickluiz@gmail.com>
 // @source       https://github.com/erickLFLopes/cronos-kairos
 // @match        https://www.dimepkairos.com.br/Dimep/Ponto/UserProfilePonto/*
 // @require      https://raw.githubusercontent.com/erickLFLopes/cronos-kairos/master/bundle.min.js
-// @updateVersion   2
-// @grant        none
+// @updateVersion   3
+// @grant GM_getValue
+// @grant GM_setValue
+// @grant GM_getResourceURL
+// @grant GM_addStyle
 // @license      MIT
 // ==/UserScript==

@@ -2,6 +2,8 @@ var minifier = require('minifier')
 
 var input =  [
 	'./build/resetJs.js',
+	'./build/ResetStyle.js',
+	'./build/LoaderTemplate.js',
 	'./build/DataAdapter.js',
 	'./build/PeriodManager.js',
 	'./build/EvaluatorHolidays.js',

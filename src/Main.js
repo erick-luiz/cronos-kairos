@@ -78,9 +78,13 @@ processCountablesDays = (week) => {
 
 getMonthData = function(month, done){
 
-    if(sessionStorage.getItem(`mes-${month}`) == undefined || 
-        sessionStorage.getItem(`mes-${month}`) == "null") {
-        done(month, JSON.parse(sessionStorage.getItem(`mes-${month}`)))
+    if(localStorage.getItem(`mes-${month}`) != undefined &&
+        localStorage.getItem(`mes-${month}`) != "null") {
+        var update = confirm("Deseja Atualizar o Relatório?");
+        if(!update){
+            done(month, JSON.parse(localStorage.getItem(`mes-${month}`)));
+            return;
+        }
     }
 
     let monthWeeks = [];
@@ -104,7 +108,7 @@ getMonthData = function(month, done){
                 }
             });
             // monthWeeks.push(weekData.week);
-            sessionStorage.setItem(`mes-${month}`,JSON.stringify(monthWeeks));
+            localStorage.setItem(`mes-${month}`,JSON.stringify(monthWeeks));
             done(month, monthWeeks);
         }
     }
@@ -120,7 +124,7 @@ let lastMonth = month == 1? 12 :month - 1;
 let twiceLastMonth = lastMonth == 1? 12: lastMonth -1;
 
 buildMonthReport = function(month, monthWeeks){
-    monthReport = `<center><h1>Mês ${cronosUtil.getMonthName(month)}</h1>`;
+    var monthReport = `<center><h1>Mês ${cronosUtil.getMonthName(month)}</h1>`;
     monthWeeks.forEach(w => { monthReport += getWeekReport(w); })
     return monthReport + "</center>";
 }

@@ -1,4 +1,4 @@
-var search = (function (w, periodManager){
+var search = (function (w, periodManager, LoaderTemplate){
     'use strict';
 
     let formatNumber = (n) => ("0" + n).slice(-2);  
@@ -144,12 +144,17 @@ var search = (function (w, periodManager){
     }
 
     var searchDaysFromWeek = function(period, week, month, done, err){
+        
+        console.log(dtoPessoaApontamentos);
 
-        w.dtoPessoaApontamentos.Week = week;
-        w.dtoPessoaApontamentos.IdPeriodo = period;
+        if(dtoPessoaApontamentos != undefined){
+            w.dtoPessoaApontamentos.Week = week;
+            w.dtoPessoaApontamentos.IdPeriodo = period;
+        }
 
         var self = this;
         var list = [];
+        LoaderTemplate.show();
         $.ajax({
             complete : function() { retrivingPonto = 0; } ,
             url: '/Dimep/Ponto/BuscarApontamentos',
@@ -179,14 +184,15 @@ var search = (function (w, periodManager){
                     // if(newPeriod < period) week = 1;
                     
                     searchDaysFromWeek(period, week-1,month, done)
+                    LoaderTemplate.hide();
                     done({week:list, final: false});
                 }else{
+                    LoaderTemplate.hide();
                     done({week:list, final:true});
                 }
-
             },
             error: function (jqXHR, textStatus, errorThrown) {
-
+                LoaderTemplate.hide();
                 if (jqXHR.responseText.indexOf('/Account/LogOn') >= 0 &&
                     jqXHR.responseText.indexOf('.indexOf(\'/Account/LogOn\')') < 0) {
                     location.reload();
@@ -201,4 +207,4 @@ var search = (function (w, periodManager){
         getAccumulation:getAccumulation
     }
 
-})(window, PeriodManager);
+})(window, PeriodManager, LoaderTemplate);
