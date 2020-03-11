@@ -9,6 +9,7 @@ let cronosUtil = (function(){
     const month = currentMonth + 1;
     const lastMonth = month > 0? month - 1: 11;
     const twiceLastMonth = lastMonth > 0? lastMonth - 1: 11;
+    const invalidMonth = twiceLastMonth > 0? twiceLastMonth - 1: 11;
     
     let getDayNeedTime = () => 8 * 60 + 48; 
 

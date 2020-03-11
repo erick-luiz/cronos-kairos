@@ -1,3 +1,22 @@
+(function(){
+
+    let month = new Date().getMonth() + 1;
+    let lastMonth = month == 1? 12 :month - 1;
+    let twiceLastMonth = lastMonth == 1? 12: lastMonth -1;
+    let invalidMonth = twiceLastMonth == 1? 12: twiceLastMonth -1;
+
+    cleanLocalData = () => {
+        if(localStorage.getItem(`month-${invalidMonth}`) != undefined && localStorage.getItem(`month-${invalidMonth}`) != "null"){
+            localStorage.removeItem(`month-${invalidMonth}`);
+        }
+    }
+
+    cleanLocalData();
+
+})();
+
+// FIX: inserir na func anonima 
+
 formatNumber = (n) => ("0" + n).slice(-2);  
 getHour = (time) => formatNumber(parseInt(time/60)) + "h " + formatNumber(time%60) +"min";
 
@@ -80,7 +99,7 @@ getMonthData = function(month, done, toUpdate){
 
 
     if(!toUpdate){
-        done(month, JSON.parse(localStorage.getItem(`mes-${month}`)));
+        done(month, JSON.parse(localStorage.getItem(`month-${month}`)));
         return;
     }
 
@@ -105,7 +124,7 @@ getMonthData = function(month, done, toUpdate){
                 }
             });
             // monthWeeks.push(weekData.week);
-            localStorage.setItem(`mes-${month}`,JSON.stringify(monthWeeks));
+            localStorage.setItem(`month-${month}`,JSON.stringify(monthWeeks));
             done(month, monthWeeks);
         }
     }
@@ -119,6 +138,7 @@ getMonthData = function(month, done, toUpdate){
 let month = new Date().getMonth() + 1;
 let lastMonth = month == 1? 12 :month - 1;
 let twiceLastMonth = lastMonth == 1? 12: lastMonth -1;
+let invalidMonth = twiceLastMonth == 1? 12: twiceLastMonth -1;
 
 buildMonthReport = function(month, monthWeeks){
     var monthReport = `<center><h1>Mês ${cronosUtil.getMonthName(month)}</h1>`;
@@ -173,7 +193,7 @@ generateLocalReport = function(){
     }, false);
 };
 
-validateLocalData = () => localStorage.getItem(`mes-${month}`) != undefined && localStorage.getItem(`mes-${month}`) != "null";
+validateLocalData = () => localStorage.getItem(`month-${month}`) != undefined && localStorage.getItem(`month-${month}`) != "null";
 
 ConfirmationModalTemplate.comfirmInput.addEventListener("click", () => generateReportClick(true));
 ConfirmationModalTemplate.notComfirmInput.addEventListener("click", () => generateReportClick(false));
