@@ -76,15 +76,12 @@ processCountablesDays = (week) => {
     });
 }
 
-getMonthData = function(month, done){
+getMonthData = function(month, done, toUpdate){
 
-    if(localStorage.getItem(`mes-${month}`) != undefined &&
-        localStorage.getItem(`mes-${month}`) != "null") {
-        var update = confirm("Deseja Atualizar o Relatório?");
-        if(!update){
-            done(month, JSON.parse(localStorage.getItem(`mes-${month}`)));
-            return;
-        }
+
+    if(!toUpdate){
+        done(month, JSON.parse(localStorage.getItem(`mes-${month}`)));
+        return;
     }
 
     let monthWeeks = [];
@@ -149,37 +146,67 @@ processMonthInfo = (element, monthWeeks) => {
     element.style.color = acc.saldo < 0? "red": "green";
 }
 
+reportMonth = month;
+generateReportClick = (toUpdate) => {
+    ConfirmationModalTemplate.toggle();
+    if(toUpdate){
+        generateReport();
+    }else{
+        generateLocalReport();
+    }
+}
+generateReport = function(){
+    LoaderTemplate.show();
+    getMonthData(reportMonth, function(reportMonth, monthWeeks){
+        PDF.generate("",`Relatório de ${cronosUtil.getMonthName(reportMonth)}`,
+        buildMonthReport(reportMonth, monthWeeks));
+        LoaderTemplate.hide();
+        PDF.print();
+    }, true);
+};
+
+generateLocalReport = function(){
+    getMonthData(reportMonth, function(reportMonth, monthWeeks){
+        PDF.generate("",`Relatório de ${cronosUtil.getMonthName(reportMonth)}`,
+        buildMonthReport(reportMonth, monthWeeks));
+        PDF.print();
+    }, false);
+};
+
+validateLocalData = () => localStorage.getItem(`mes-${month}`) != undefined && localStorage.getItem(`mes-${month}`) != "null";
+
+ConfirmationModalTemplate.comfirmInput.addEventListener("click", () => generateReportClick(true));
+ConfirmationModalTemplate.notComfirmInput.addEventListener("click", () => generateReportClick(false));
 
 let btn = viewManager.btnCurrentMonth;
 btn.addEventListener("click", function(){
-    getMonthData(month, function(month, monthWeeks){
-        PDF.generate("",`Relatório de ${cronosUtil.getMonthName(month)}`,
-        buildMonthReport(month, monthWeeks));
-        PDF.print();
-    });
+    reportMonth = month;
+    if(validateLocalData){
+        ConfirmationModalTemplate.toggle();
+    }else{
+        generateReport();
+    }
 });
-// processButton(btn);
-// processMonthInfo(viewManager.monthAccumulation, monthWeeks);
 
 let btnLastMonth = viewManager.btnLastMonth;
 btnLastMonth.addEventListener("click", function(){
-    getMonthData(lastMonth, function(month, monthWeeks){
-        PDF.generate("",`Relatório de ${cronosUtil.getMonthName(lastMonth)}`,
-        buildMonthReport(lastMonth, monthWeeks));
-        PDF.print();
-    });
+    reportMonth = lastMonth;
+    if(validateLocalData){
+        ConfirmationModalTemplate.toggle();
+    }else{
+        generateReport();
+    }
 });
-// processButton(btn);
-// processMonthInfo(viewManager.lastMonthAccumulation, monthWeeks);
 
 
 let btnTwiceLastMonth = viewManager.btnTwiceLastMonth;
 btnTwiceLastMonth.addEventListener("click", function(){
-    getMonthData(twiceLastMonth, function(month, monthWeeks){
-        PDF.generate("",`Relatório de ${cronosUtil.getMonthName(twiceLastMonth)}`,
-            buildMonthReport(twiceLastMonth, monthWeeks));
-        PDF.print();
-    });
+    reportMonth = twiceLastMonth;
+    if(validateLocalData){
+        ConfirmationModalTemplate.toggle();
+    }else{
+        generateReport();
+    }
 });
-// processButton(btn);
+
 

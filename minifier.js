@@ -3,7 +3,8 @@ var minifier = require('minifier')
 var input =  [
 	'./build/resetJs.js',
 	'./build/ResetStyle.js',
-	'./build/LoaderTemplate.js',
+	'./build/templates/ConfirmationModalTemplate.js',
+	'./build/templates/LoaderTemplate.js',
 	'./build/DataAdapter.js',
 	'./build/PeriodManager.js',
 	'./build/EvaluatorHolidays.js',
@@ -15,7 +16,7 @@ var input =  [
 	'./build/Main.js',]
 
 minifier.on('error', function(err) {
-	console.log('deu erro!')
+	console.log('Erro na minificação dos arquivos JS!')
 })
 
 minifier.minify(input, {output:'./bundle.min.js'})

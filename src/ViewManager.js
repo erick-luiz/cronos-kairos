@@ -1,11 +1,8 @@
 let viewManager = (function(){
 
     let buttonTemplate = (month) => `
-            <button id="Month-${month}" style="margin-rigth:1%;">
-                Gerar relatório de ${cronosUtil.getMonthName(month)}
-            </button>
+            <input id="Month-${month}" style="margin-rigth:1%;" type="button" value="Gerar relatório de ${cronosUtil.getMonthName(month)}" />
         `;
-
 
     let reportOptions = `<div class="marginTop20" style="overflow:hidden; background-color: #E1E0E0; border: 2px solid #E1E0E0;-moz-border-radius: 4px;-webkit-border-radius: 4px;border-radius: 4px;margin-bottom: 10px;">
             <div style="float:left;width:2%;background-color:#E1E0E0;padding-top:5px;text-align:center">
