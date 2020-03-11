@@ -193,7 +193,7 @@ generateLocalReport = function(){
     }, false);
 };
 
-validateLocalData = () => localStorage.getItem(`month-${month}`) != undefined && localStorage.getItem(`month-${month}`) != "null";
+validateLocalData = () => localStorage.getItem(`month-${reportMonth}`) != undefined && localStorage.getItem(`month-${reportMonth}`) != "null";
 
 ConfirmationModalTemplate.comfirmInput.addEventListener("click", () => generateReportClick(true));
 ConfirmationModalTemplate.notComfirmInput.addEventListener("click", () => generateReportClick(false));
