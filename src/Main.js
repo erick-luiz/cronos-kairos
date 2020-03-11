@@ -201,7 +201,7 @@ ConfirmationModalTemplate.notComfirmInput.addEventListener("click", () => genera
 let btn = viewManager.btnCurrentMonth;
 btn.addEventListener("click", function(){
     reportMonth = month;
-    if(validateLocalData){
+    if(validateLocalData()){
         ConfirmationModalTemplate.toggle();
     }else{
         generateReport();
@@ -211,7 +211,7 @@ btn.addEventListener("click", function(){
 let btnLastMonth = viewManager.btnLastMonth;
 btnLastMonth.addEventListener("click", function(){
     reportMonth = lastMonth;
-    if(validateLocalData){
+    if(validateLocalData()){
         ConfirmationModalTemplate.toggle();
     }else{
         generateReport();
@@ -222,7 +222,7 @@ btnLastMonth.addEventListener("click", function(){
 let btnTwiceLastMonth = viewManager.btnTwiceLastMonth;
 btnTwiceLastMonth.addEventListener("click", function(){
     reportMonth = twiceLastMonth;
-    if(validateLocalData){
+    if(validateLocalData()){
         ConfirmationModalTemplate.toggle();
     }else{
         generateReport();
