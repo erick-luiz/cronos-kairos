@@ -20,11 +20,21 @@ Plugin para gerar relatório de Horas do Mês no Kairos (dimepkairos)
 
 O plugin gera o relatório de horas por semana dos ultimos três meses - incluindo o atual. Como o desenvolvimento tem como base a cidade de Rio Grande, nesta primeira fase, apenas os feriados da cidade serão considerados neste relatório, os mesmos estarão marcados de laranja.
 
-Não é uma atividade simples resgatar os dados mensais dos últimos três meses de um user, por isso ao acessar a página os botões de relatório estarão desativados, assim que o relatório de determinado mês for carregado o seu respectivo botão se ativa. Note que este processo é assíncrono, e por isso não à ordem definida para o fim do processo. 
+Ao acessar a página teremos três botões disponiveis para uso.
 
-![Menu da Aplicação](https://raw.githubusercontent.com/erickLFLopes/cronos-kairos/master/doc/img/menu_v2.png)
+![Menu da Aplicação](https://raw.githubusercontent.com/erickLFLopes/cronos-kairos/master/doc/img/menu_v3.png)
 
-Após  clicar em um dos botões para gerar o relatório será aberta uma janela onde você terá o mês dividido em semanas e com as horas de determinada semana contabilizadas, como a exibida a seguir: 
+Após escolher o mês para geração do relatório a aplicação poderá se comportar de duas maneiras: 
+
+1 - caso o relatório ja tenha sido buscado em algum momento, será exibido uma caixa para escolher se deseja gerar um novo relatório atualizando os dados, o se apenas quer gerar o relatório com os mesmo dados já consultados anteriormente. 
+
+![Modal de seleção](https://raw.githubusercontent.com/erickLFLopes/cronos-kairos/master/doc/img/modal_selecao_v1.PNG)
+
+2 - Você ainda não tem os dados deste relatório, então a aplicação abre um loader e da inicio a consulta do mesmo. 
+
+![Loader](https://raw.githubusercontent.com/erickLFLopes/cronos-kairos/master/doc/img/loader_v1.PNG)
+
+Assim que a consulta terminar, será aberta uma janela onde você terá o mês dividido em semanas e com as horas de determinada semana contabilizadas, como a exibida a seguir: 
 
 ![Exemplo de relatório da aplicação](https://raw.githubusercontent.com/erickLFLopes/cronos-kairos/master/doc/img/relatorio.png)
 
