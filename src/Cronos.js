@@ -49,7 +49,7 @@ var search = (function (w, periodManager, LoaderTemplate){
             }
         }
 
-        baseDate = new Date(data);
+        var baseDate = new Date(data);
         outDates.concat(Order.getOdersForDay());
         outDates.sort();
 
