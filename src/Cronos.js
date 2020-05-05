@@ -50,7 +50,7 @@ var search = (function (w, periodManager, LoaderTemplate){
         }
 
         var baseDate = new Date(data);
-        outDates.concat(Order.getOdersForDay());
+        outDates.concat(Order.getOdersForDay(baseDate));
         outDates.sort();
 
         while(outDates.length < 4){
