@@ -39,10 +39,29 @@ var search = (function (w, periodManager, LoaderTemplate){
     var returnDay = function (element){
         var data = getData(element).replace(/(\d{2})_(\d{2})_(\d{4})/,"$2/$1/$3");
 
-        var start = new Date(data + " " + getEntrada(element));
-        var end = new Date(data + " " + getAlmoco(element));
-        var start1 = new Date(data + " " + getVoltaAlmoco(element));
-        var end1 = new Date(data + " " + getSaida(element));
+        outDates = [];
+        
+        var hours = [getEntrada(element), getAlmoco(element),getVoltaAlmoco(element),getSaida(element)]; 
+
+        for(i = 0; i < hours.length; i++){
+            if(hours[i] != ""){
+                outDates.push(new Date(data + " " + hours[i]));
+            }
+        }
+
+        baseDate = new Date(data);
+        outDates.concat(Order.getOdersForDay());
+        outDate.sort();
+
+        while(outDate.length < 4){
+            outDate.push(baseDate);
+        }
+
+        var start = outDate[0];
+        var end = outDate[1];
+        var start1 = outDate[2];
+        var end1 = outDate[3];
+
         var h = (getAccumulationValue(start, end) + getAccumulationValue(start1, end1))/60;
         var m = (getAccumulationValue(start, end) + getAccumulationValue(start1, end1)) % 60;
 
