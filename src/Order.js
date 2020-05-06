@@ -6,8 +6,14 @@ let Order = (function(){
 	    
 	    let currentYear = new Date().getFullYear();
 
-	    var url = '/Dimep/PedidosJustificativas/Index/1917';
-	    var xhttp = new XMLHttpRequest();
+        var url = '/Dimep/PedidosJustificativas/Index/';
+        var url_atual = window.location.pathname;
+        if(url_atual){
+            var idUser = url_atual.substring(url_atual.lastIndexOf("/") + 1);
+            url += idUser;
+        }
+        
+        var xhttp = new XMLHttpRequest();
 	    
 	    xhttp.onreadystatechange = function() {
 	        if (this.readyState == 4 && this.status == 200) {
@@ -45,7 +51,10 @@ let Order = (function(){
 		let dias = $(response).find('#TabSituacaoPedido1 tr');
 		for(i = 1; i < dias.length; i++){
 			orders.push(buildSimpleDay(dias[i]));
-		}
+        }
+        if(orders.length == 0) {
+            console.warn("Não encontramos seus pedidos");
+        }
 	});
 
 	let getOdersForDay = (date) => {
@@ -58,6 +67,6 @@ let Order = (function(){
 		return out;
 	}
 
-    return {getOdersForDay}
+    return {getOdersForDay, orders}
 
 })();
