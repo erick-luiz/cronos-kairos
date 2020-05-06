@@ -7,7 +7,7 @@
 // @source       https://github.com/erickLFLopes/cronos-kairos
 // @match        https://www.dimepkairos.com.br/Dimep/Ponto/UserProfilePonto/*
 // @require      https://raw.githubusercontent.com/erickLFLopes/cronos-kairos/master/bundle.min.js
-// @updateVersion   3
+// @updateVersion   4
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_getResourceURL
