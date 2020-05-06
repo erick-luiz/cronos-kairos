@@ -52,7 +52,7 @@ let Order = (function(){
 		let out = [];
 		for(i = 0; i < orders.length; i++){
 			if(orders[i].baseDate.toDateString() == date.toDateString()) {
-				out.push(orders[i]);
+				out.push(orders[i].date);
 			}
 		}
 		return out;

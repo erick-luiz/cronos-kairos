@@ -1,4 +1,4 @@
-var search = (function (w, periodManager, LoaderTemplate){
+var search = (function (w, periodManager, LoaderTemplate, Order){
     'use strict';
 
     let formatNumber = (n) => ("0" + n).slice(-2);  
@@ -50,7 +50,7 @@ var search = (function (w, periodManager, LoaderTemplate){
         }
 
         var baseDate = new Date(data);
-        outDates.concat(Order.getOdersForDay(baseDate));
+        outDates = outDates.concat(Order.getOdersForDay(baseDate));
         outDates.sort();
 
         while(outDates.length < 4){
@@ -223,4 +223,4 @@ var search = (function (w, periodManager, LoaderTemplate){
         getAccumulation:getAccumulation
     }
 
-})(window, PeriodManager, LoaderTemplate);
+})(window, PeriodManager, LoaderTemplate, Order);
