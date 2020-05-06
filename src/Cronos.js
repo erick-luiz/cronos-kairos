@@ -1,4 +1,4 @@
-var search = (function (w, periodManager, LoaderTemplate){
+var search = (function (w, periodManager, LoaderTemplate, Order){
     'use strict';
 
     let formatNumber = (n) => ("0" + n).slice(-2);  
@@ -39,10 +39,29 @@ var search = (function (w, periodManager, LoaderTemplate){
     var returnDay = function (element){
         var data = getData(element).replace(/(\d{2})_(\d{2})_(\d{4})/,"$2/$1/$3");
 
-        var start = new Date(data + " " + getEntrada(element));
-        var end = new Date(data + " " + getAlmoco(element));
-        var start1 = new Date(data + " " + getVoltaAlmoco(element));
-        var end1 = new Date(data + " " + getSaida(element));
+        var outDates = [];
+        
+        var hours = [getEntrada(element), getAlmoco(element),getVoltaAlmoco(element),getSaida(element)]; 
+
+        for(i = 0; i < hours.length; i++){
+            if(hours[i] != ""){
+                outDates.push(new Date(data + " " + hours[i]));
+            }
+        }
+
+        var baseDate = new Date(data);
+        outDates = outDates.concat(Order.getOdersForDay(baseDate));
+        outDates.sort();
+
+        while(outDates.length < 4){
+            outDates.push(baseDate);
+        }
+
+        var start = outDates[0];
+        var end = outDates[1];
+        var start1 = outDates[2];
+        var end1 = outDates[3];
+
         var h = (getAccumulationValue(start, end) + getAccumulationValue(start1, end1))/60;
         var m = (getAccumulationValue(start, end) + getAccumulationValue(start1, end1)) % 60;
 
@@ -204,4 +223,4 @@ var search = (function (w, periodManager, LoaderTemplate){
         getAccumulation:getAccumulation
     }
 
-})(window, PeriodManager, LoaderTemplate);
+})(window, PeriodManager, LoaderTemplate, Order);

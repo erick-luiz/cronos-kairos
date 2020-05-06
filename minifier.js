@@ -8,6 +8,7 @@ var input =  [
 	'./build/DataAdapter.js',
 	'./build/PeriodManager.js',
 	'./build/EvaluatorHolidays.js',
+	'./build/Order.js',
 	'./build/PDF.js',
 	'./build/PeriodUtils.js',
 	'./build/CronosUtils.js',
