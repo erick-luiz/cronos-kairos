@@ -1,4 +1,4 @@
-periodUtils = (function(){
+let periodUtils = (function(){
 
     let periods = document.querySelectorAll("select[name=per] option")
 

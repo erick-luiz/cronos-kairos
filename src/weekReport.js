@@ -1,5 +1,5 @@
-days = ["Domingo","Segunda","Terça","Quarta","Quinta","Sexta","Sabado"];
-avaliableMonth = new Date().getMonth() + 1;
+let days = ["Domingo","Segunda","Terça","Quarta","Quinta","Sexta","Sabado"];
+let avaliableMonth = new Date().getMonth() + 1;
 
 var getEntrada = function (element) {
     return element.querySelector('.TimeINVisualizacao') ? element.querySelector('.TimeINVisualizacao').textContent : "";
@@ -28,9 +28,9 @@ var getAccumulationValue = function(d1, d2){
     return out > 0? out : 0;
 }
 
-formatHour = (date) => formatNumber(date.getHours()) + ":" + formatNumber(date.getMinutes());
+let formatHour = (date) => formatNumber(date.getHours()) + ":" + formatNumber(date.getMinutes());
 
-returnDay = function (element){
+let returnDay = function (element){
     var data = getData(element).replace(/(\d{2})_(\d{2})_(\d{4})/,"$2/$1/$3");
 
     var start = new Date(data + " " + getEntrada(element));
@@ -57,25 +57,25 @@ returnDay = function (element){
 
 document.querySelectorAll("div[id^=ApontID]")
 
-getDayNeedTime = () => 8 * 60 + 48; 
-getWeekNeedTime = (n) => getDayNeedTime() * n;
-getColor = (time) => time < getWeekNeedTime(5)? 'red':'#0bb50bd4';
+let getDayNeedTime = () => 8 * 60 + 48; 
+let getWeekNeedTime = (n) => getDayNeedTime() * n;
+let getColor = (time) => time < getWeekNeedTime(5)? 'red':'#0bb50bd4';
 
-getFormatedTr = (day) => `<tr><td>${days[day.dayOfWeek]}</td>
+let getFormatedTr = (day) => `<tr><td>${days[day.dayOfWeek]}</td>
 			<td>${day.formatedPT}</td><td>${day.s}</td>
 			<td>${day.e}</td><td>${day.s1}</td>
 			<td>${day.e1}</td><td>${getHour(day.accumulation)}</td></tr>`;
 
-getDefaultTr = (day) => `<tr><td>${days[day.dayOfWeek]}</td>
+let getDefaultTr = (day) => `<tr><td>${days[day.dayOfWeek]}</td>
 			<td>${day.formatedPT}</td><td>-</td>
 			<td>-</td><td>-</td>
 			<td>-</td><td>-</td></tr>`;
 
 
-formatNumber = (n) => ("0" + n).slice(-2);  
-getHour = (time) => formatNumber(parseInt(time/60)) + "h " + formatNumber(time%60) +"min";
+let formatNumber = (n) => ("0" + n).slice(-2);  
+let getHour = (time) => formatNumber(parseInt(time/60)) + "h " + formatNumber(time%60) +"min";
 
-weekTime = 0;
+let weekTime = 0;
 
 
 content = `<table border="1" style="border-collapse: collapse;">
