@@ -149,7 +149,7 @@ var search = (function (w, periodManager, LoaderTemplate, Order, ReportConfig){
         };
     }
 
-    var searchDaysFromWeek = function(period, week, month, done, err){
+    let searchDaysFromWeek = function(period, week, month, done, err){
         LoaderTemplate.show();
 
         dtoPessoaApontamentos.Week = week;
@@ -167,7 +167,7 @@ var search = (function (w, periodManager, LoaderTemplate, Order, ReportConfig){
             data: JSON.stringify(dtoPessoaApontamentos),
             success: function(data) {
                 var formattedData = data.replace(/\<scrip[\s\S]*?\<\/script\>/gi,"");
-
+                console.log(formattedData);
                 list = list.concat(processDays(formattedData, month));
                 if(!containInitDate(list, month)) {
 
@@ -179,12 +179,12 @@ var search = (function (w, periodManager, LoaderTemplate, Order, ReportConfig){
                         if(period != newPeriod) week = 1;
                         period = newPeriod;
                     }
-
+                    console.log(period, week-1,month, done)
                     searchDaysFromWeek(period, week-1,month, done)
-                    
+                    //LoaderTemplate.hide(); // Refatorar parte de remoção do loader
                     done({week:list, final: false});
-                }else{
-                
+                } else{
+                    //LoaderTemplate.hide();
                     done({week:list, final:true});
                 }
             },
@@ -194,6 +194,7 @@ var search = (function (w, periodManager, LoaderTemplate, Order, ReportConfig){
                     jqXHR.responseText.indexOf('.indexOf(\'/Account/LogOn\')') < 0) {
                     location.reload();
                 }
+                LoaderTemplate.hide();
             }
         });
     }

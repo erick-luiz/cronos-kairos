@@ -16,6 +16,7 @@ var input =  [
 	'./build/template/ViewManager.js',
 	'./build/service/ReportConfigService.js',
 	'./build/service/CronosService.js',
+	'./build/template/ErrorMessageTemplate.js',
 	'./build/app.js',]
 
 minifier.on('error', function(err) {

@@ -8,16 +8,8 @@ let ReportConfig = (function(confirmation){
         return [];
     }
 
-    let getDayNeedTime = function(){
-        let h = confirmation.weeklyHourlyLoadSelect.value;
-        console.log("erick -> ", h);
-        if(h*1 == 40) return 8 * 60;
-        return 8 * 60 + 48;
-    }
-
     return {
-        getDaysToExclude: getDaysToExclude,
-        getDayNeedTime: getDayNeedTime
+        getDaysToExclude: getDaysToExclude
     }
 
 })(ConfirmationModalTemplate);

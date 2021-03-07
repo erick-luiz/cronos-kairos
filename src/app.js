@@ -15,24 +15,10 @@
 
 })();
 
-// FIX: inserir na func anonima 
-
-let formatNumber = (n) => ("0" + n).slice(-2);  
-
-
-let getColor = (time, needTime) => time < needTime? 'red':'#0bb50bd4';
-
-// ################################# MAIN
-
-let isHoliday = (day) => day.isHoliday;
-let isWeekEndDay = (day) => day.dayOfWeek == 0 || day.dayOfWeek == 6;
-let isWeekDay = (day) => !isWeekEndDay(day);
-let isNotExcluded = (day) => day.isExcludedDay;
-
 let isValidWeek = (week) => {
     for(var i = 0; i < week.length; i++){
         let day = week[i];
-        if(isWeekDay(day) && day.accumulation > 0){
+        if(cronosUtil.isWeekDay(day) && day.accumulation > 0){
             return true;
         }
     }
@@ -41,12 +27,11 @@ let isValidWeek = (week) => {
 
 let processCountablesDays = (week) => {
     week.forEach(day => {
-        if(isWeekDay(day) && !isHoliday(day) && !isNotExcluded(day)) day.countableDay = true;
+        if(cronosUtil.isWeekDay(day) && !day.isHoliday && !day.isExcludedDay) day.countableDay = true;
     });
 }
 
 let getMonthData = function(month, done, toUpdate){
-
 
     if(!toUpdate){
         done(month, JSON.parse(localStorage.getItem(`month-${month}`)));
@@ -72,13 +57,12 @@ let getMonthData = function(month, done, toUpdate){
                     week = [];
                 }
             });
-            // monthWeeks.push(weekData.week);
+
             localStorage.setItem(`month-${month}`,JSON.stringify(monthWeeks));
             done(month, monthWeeks);
         }
     }
 
-    let weekInit = cronosUtil.getInitialWeek(month);
     let period = PeriodManager.getPeriod(new Date().withMonth(month).withDay(28).adjustYear(month));
 
     search.searchDaysFromWeek(period, 0, month, processWeek, null);
@@ -116,36 +100,34 @@ let processMonthInfo = (element, monthWeeks) => {
 }
 
 let reportMonth = month;
-let generateReportClick = (toUpdate) => {
-    ConfirmationModalTemplate.toggle();
-    if(toUpdate){
-        generateReport();
-    }else{
-        generateLocalReport();
-    }
-}
-let generateReport = function(){
-    LoaderTemplate.show();
-    getMonthData(reportMonth, function(reportMonth, monthWeeks){
-        PDF.generate("",`Relatório de ${cronosUtil.getMonthName(reportMonth)}`,
-        buildMonthReport(reportMonth, monthWeeks));
-        LoaderTemplate.hide();
-        PDF.print();
-    }, true);
-};
 
-let generateLocalReport = function(){
+let generatReportFunction = [];
+
+
+let generateReport = (searchData) => {
+    
+    ConfirmationModalTemplate.toggle();
+ 
     getMonthData(reportMonth, function(reportMonth, monthWeeks){
-        PDF.generate("",`Relatório de ${cronosUtil.getMonthName(reportMonth)}`,
-        buildMonthReport(reportMonth, monthWeeks));
-        PDF.print();
-    }, false);
-};
+        
+        try{
+            PDF.generate("",`Relatório de ${cronosUtil.getMonthName(reportMonth)}`,
+            buildMonthReport(reportMonth, monthWeeks));
+            PDF.print();
+            LoaderTemplate.hide();
+        } catch(err){
+            ErrorMessageTemplate.show("Ocorreu um erro ao gerar o relatório, caso persista <a target='target' href='https://github.com/erickLFLopes/cronos-kairos/issues'> nos informe</a>");
+            console.error(err.message);
+            LoaderTemplate.hide();
+        }
+    }, searchData);
+   
+}
 
 let validateLocalData = () => localStorage.getItem(`month-${reportMonth}`) != undefined && localStorage.getItem(`month-${reportMonth}`) != "null";
 
-ConfirmationModalTemplate.comfirmInput.addEventListener("click", () => generateReportClick(true));
-ConfirmationModalTemplate.notComfirmInput.addEventListener("click", () => generateReportClick(false));
+ConfirmationModalTemplate.comfirmInput.addEventListener("click", () => generateReport(true));
+ConfirmationModalTemplate.notComfirmInput.addEventListener("click", () => generateReport(false));
 
 let btn = viewManager.btnCurrentMonth;
 btn.addEventListener("click", function(){
@@ -153,7 +135,7 @@ btn.addEventListener("click", function(){
     if(validateLocalData()){
         ConfirmationModalTemplate.toggle();
     }else{
-        generateReport();
+        generateReport(true);
     }
 });
 
@@ -163,7 +145,7 @@ btnLastMonth.addEventListener("click", function(){
     if(validateLocalData()){
         ConfirmationModalTemplate.toggle();
     }else{
-        generateReport();
+        generateReport(true);
     }
 });
 
@@ -174,7 +156,7 @@ btnTwiceLastMonth.addEventListener("click", function(){
     if(validateLocalData()){
         ConfirmationModalTemplate.toggle();
     }else{
-        generateReport();
+        generateReport(true);
     }
 });
 

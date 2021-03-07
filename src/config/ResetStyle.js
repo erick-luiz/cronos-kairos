@@ -73,8 +73,33 @@
       }  
     `;
 
+    var errorMsgStyle = `
+      .alert-msg {
+        padding: 10px;
+        background-color: #f44336;
+        color: white;
+        margin: 0.7rem;
+      }
+      
+      .close-btn {
+        margin-left: 15px;
+        color: white;
+        font-weight: bold;
+        float: right;
+        font-size: 16px;
+        line-height: 10px;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+      
+      .close-btn:hover {
+        color: black;
+      }
+    `; 
+
     GM_addStyle(btnsStyle);
     GM_addStyle(loaderStyleCss);
     GM_addStyle(confirmModalStyle);
+    GM_addStyle(errorMsgStyle);
 
 })();

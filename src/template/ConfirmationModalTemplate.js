@@ -9,8 +9,9 @@ var ConfirmationModalTemplate = (function(){
             <br /><br /><br />
             Carga Horaria do Calculo
             <select id="weekly-hourly-load">
-                <option value="40">40</option>
+                <option value="40" selected>40</option>
                 <option value="44">44</option>
+                <option value="30">30</option>
             </select>
             <br /><br />
             <h3>Deseja atualizar os dados?</h3>
