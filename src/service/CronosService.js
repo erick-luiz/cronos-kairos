@@ -1,13 +1,10 @@
-var search = (function (w, periodManager, LoaderTemplate, Order){
+var search = (function (w, periodManager, LoaderTemplate, Order, ReportConfig){
     'use strict';
 
     let formatNumber = (n) => ("0" + n).slice(-2);  
     let formatHour = (date) => formatNumber(date.getHours()) + ":" + formatNumber(date.getMinutes());
-    let getDayNeedTime = () => 8 * 60 + 48; 
+    let getDayNeedTime = () => ReportConfig.getDayNeedTime(); 
     let getWeekNeedTime = (n) => getDayNeedTime() * n;
-
-
-    let avaliableMonth = new Date().getMonth() + 1;
 
     var getEntrada = function (element) {
         return element.querySelector('.TimeINVisualizacao') ? element.querySelector('.TimeINVisualizacao').textContent : "";
@@ -37,13 +34,14 @@ var search = (function (w, periodManager, LoaderTemplate, Order){
     }
 
     var returnDay = function (element){
+
         var data = getData(element).replace(/(\d{2})_(\d{2})_(\d{4})/,"$2/$1/$3");
 
         var outDates = [];
         
         var hours = [getEntrada(element), getAlmoco(element),getVoltaAlmoco(element),getSaida(element)]; 
 
-        for(i = 0; i < hours.length; i++){
+        for(let i = 0; i < hours.length; i++){
             if(hours[i] != ""){
                 outDates.push(new Date(data + " " + hours[i]));
             }
@@ -64,22 +62,25 @@ var search = (function (w, periodManager, LoaderTemplate, Order){
 
         var h = (getAccumulationValue(start, end) + getAccumulationValue(start1, end1))/60;
         var m = (getAccumulationValue(start, end) + getAccumulationValue(start1, end1)) % 60;
+        var day = data.replace(/\d{2}\/(\d{2})\/\d{4}/,"$1");
+        let daysToExclude = ReportConfig.getDaysToExclude();
 
         return {
-            day:data.replace(/\d{2}\/(\d{2})\/\d{4}/,"$1"),
+            day:day,
             month:data.replace(/(\d{2})\/\d{2}\/\d{4}/,"$1"),
             formatedEN:data.replace(/(\d{2})\/(\d{2})\/(\d{4})/,"$3-$1-$2"),
             formatedPT:data.replace(/(\d{2})\/(\d{2})\/(\d{4})/,"$2/$1/$3"),
             date: data,
             start: start,
             isHoliday: evaluatorHoliday.verifyDate(start),
+            isExcludedDay: daysToExclude.includes(day),
             countableDay: false,
             dayOfWeek: start.getDay(),
             s:formatHour(start) ,
             e:formatHour(end),
             s1:formatHour(start1),
             e1:formatHour(end1),
-            accumulation: getAccumulationValue(start, end) + getAccumulationValue(start1, end1)
+            accumulation: daysToExclude.includes(day)? 0: getAccumulationValue(start, end) + getAccumulationValue(start1, end1)
         }
     }
 
@@ -103,20 +104,6 @@ var search = (function (w, periodManager, LoaderTemplate, Order){
             }
         }
         return false;
-    }
-    
-    var getShorterDate = function(listDays){
-        let date = listDays[0];
-        listDays.forEach(day => {
-            if(day.start < date) date = day.start;
-        });
-        return date? date.start: null;
-    }
-
-    var getPeriod = function(lastDay, period){
-        if(lastDay == null) return period;
-        let date = new Date(lastDay.getMonth(),lastDay.getDay() - 1,lastDay.getYear());
-        return periodUtils.getPeriod(date, period);
     }
 
     var getAccumulationWeek = function(week){
@@ -162,7 +149,7 @@ var search = (function (w, periodManager, LoaderTemplate, Order){
         };
     }
 
-    var searchDaysFromWeek = function(period, week, month, done, err){
+    let searchDaysFromWeek = function(period, week, month, done, err){
         LoaderTemplate.show();
 
         dtoPessoaApontamentos.Week = week;
@@ -180,7 +167,7 @@ var search = (function (w, periodManager, LoaderTemplate, Order){
             data: JSON.stringify(dtoPessoaApontamentos),
             success: function(data) {
                 var formattedData = data.replace(/\<scrip[\s\S]*?\<\/script\>/gi,"");
-
+                console.log(formattedData);
                 list = list.concat(processDays(formattedData, month));
                 if(!containInitDate(list, month)) {
 
@@ -192,18 +179,12 @@ var search = (function (w, periodManager, LoaderTemplate, Order){
                         if(period != newPeriod) week = 1;
                         period = newPeriod;
                     }
-                    // var newPeriod = getPeriod(getShorterDate(list), w.dtoPessoaApontamentos.IdPeriodo);
-
-                    //console.log(w.dtoPessoaApontamentos.IdPeriodo, period , getPeriod(getShorterDate(list), w.dtoPessoaApontamentos.IdPeriodo), list, getShorterDate(list));
-
-
-                    // if(newPeriod < period) week = 1;
-                    
+                    console.log(period, week-1,month, done)
                     searchDaysFromWeek(period, week-1,month, done)
-                    
+                    //LoaderTemplate.hide(); // Refatorar parte de remoção do loader
                     done({week:list, final: false});
-                }else{
-                
+                } else{
+                    //LoaderTemplate.hide();
                     done({week:list, final:true});
                 }
             },
@@ -213,6 +194,7 @@ var search = (function (w, periodManager, LoaderTemplate, Order){
                     jqXHR.responseText.indexOf('.indexOf(\'/Account/LogOn\')') < 0) {
                     location.reload();
                 }
+                LoaderTemplate.hide();
             }
         });
     }
@@ -223,4 +205,4 @@ var search = (function (w, periodManager, LoaderTemplate, Order){
         getAccumulation:getAccumulation
     }
 
-})(window, PeriodManager, LoaderTemplate, Order);
+})(window, PeriodManager, LoaderTemplate, Order, ReportConfig);

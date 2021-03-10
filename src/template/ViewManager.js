@@ -8,17 +8,25 @@ let viewManager = (function(){
             <div style="float:left;width:2%;background-color:#E1E0E0;padding-top:5px;text-align:center">
             <i class="fa fa-pencil"></i>
             </div>
-            <div style="float:left;  width:98%; background-color:#fff">        <div style="padding: 10px">
-                <br>
-                ${buttonTemplate(cronosUtil.getTwiceLastMonth())}
-                ${buttonTemplate(cronosUtil.getLastMonth())}
-                ${buttonTemplate(cronosUtil.getCurrentMonth())}
-                </div>
+            <div style="float:left;  width:98%; background-color:#fff" id="menu-viewer">
+            
+                <div style="padding: 10px">
+                    <br>
+                    ${buttonTemplate(cronosUtil.getTwiceLastMonth())}
+                    ${buttonTemplate(cronosUtil.getLastMonth())}
+                    ${buttonTemplate(cronosUtil.getCurrentMonth())}
+                    </div>
                 </div>
             
     </div></div>`;
 
     let element = document.querySelector(".PageTitle +div");
+    /*
+    FIX: pagina de pedidos precisa de ajusta na consulta
+    if(window.location.pathname.match('PedidosJustificativas')){
+        element = document.querySelector("#TabPedido1");
+    } 
+    */
     element.insertAdjacentHTML("beforeBegin",reportOptions);
     
     let btnCurrentMonth = document.querySelector("#Month-"+cronosUtil.getCurrentMonth());

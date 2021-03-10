@@ -1,20 +1,23 @@
 var minifier = require('minifier')
 
 var input =  [
-	'./build/resetJs.js',
-	'./build/ResetStyle.js',
-	'./build/templates/ConfirmationModalTemplate.js',
-	'./build/templates/LoaderTemplate.js',
-	'./build/DataAdapter.js',
-	'./build/PeriodManager.js',
-	'./build/EvaluatorHolidays.js',
+	'./build/config/resetJs.js',
+	'./build/config/ResetStyle.js',
+	'./build/template/ConfirmationModalTemplate.js',
+	'./build/template/LoaderTemplate.js',
+	'./build/config/DateAdapter.js',
+	'./build/service/PeriodService.js',
+	'./build/service/HolidaysService.js',
 	'./build/Order.js',
-	'./build/PDF.js',
-	'./build/PeriodUtils.js',
-	'./build/CronosUtils.js',
-	'./build/ViewManager.js',
-	'./build/Cronos.js',
-	'./build/Main.js',]
+	'./build/service/pdfService.js',
+	'./build/util/PeriodUtils.js',
+	'./build/util/CronosUtils.js',
+	'./build/template/ReportTemplate.js',
+	'./build/template/ViewManager.js',
+	'./build/service/ReportConfigService.js',
+	'./build/service/CronosService.js',
+	'./build/template/ErrorMessageTemplate.js',
+	'./build/app.js',]
 
 minifier.on('error', function(err) {
 	console.log('Erro na minificação dos arquivos JS!')

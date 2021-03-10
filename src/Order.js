@@ -24,7 +24,7 @@ let Order = (function(){
 	    xhttp.send();
 	}
 
-	buildSimpleDay = (element) => {
+	let buildSimpleDay = (element) => {
 		
 		let tds = element.querySelectorAll("td");
 		let fullDate = tds[0].innerText.trim();
@@ -49,7 +49,7 @@ let Order = (function(){
 
 	getOrders((response) => {
 		let dias = $(response).find('#TabSituacaoPedido1 tr');
-		for(i = 1; i < dias.length; i++){
+		for(let i = 1; i < dias.length; i++){
 			orders.push(buildSimpleDay(dias[i]));
         }
         if(orders.length == 0) {
@@ -59,7 +59,7 @@ let Order = (function(){
 
 	let getOdersForDay = (date) => {
 		let out = [];
-		for(i = 0; i < orders.length; i++){
+		for(let i = 0; i < orders.length; i++){
 			if(orders[i].baseDate.toDateString() == date.toDateString()) {
 				out.push(orders[i].date);
 			}

@@ -1,6 +1,6 @@
 let PeriodManager = (function(){
 	
-	Period = function(id, start, end){
+	let Period = function(id, start, end){
 		this.id = id; 
 		this.start = start; 
 		this.end = end;
@@ -13,11 +13,11 @@ let PeriodManager = (function(){
 	let expD2 = data => data.replace(/[\s\S]*\d{2}\/\d{2}\/\d{4}[\s\S]*(\d{2})\/(\d{2})\/(\d{4})/, dateExp);
 
 	let init = function(){
-		periodSelect = document.querySelector(".separatorPeriodo + div select")
+		let periodSelect = document.querySelector(".separatorPeriodo + div select")
 
 		if(periodSelect){		
 
-			for(i = 0; i < periodSelect.length; i++){
+			for(let i = 0; i < periodSelect.length; i++){
 				let option = periodSelect.options[i];
 				let id = option.value
 
@@ -33,7 +33,7 @@ let PeriodManager = (function(){
 
 	let getPeriod = function(date) { 
 
-		for(i = 0; i < periods.length; i++) {
+		for(let i = 0; i < periods.length; i++) {
 			if(periods[i].start <= date && date <= periods[i].end){
 				return periods[i].id;
 			}
