@@ -24,20 +24,26 @@ Ao acessar a página teremos três botões disponiveis para uso.
 
 ![Menu da Aplicação](https://raw.githubusercontent.com/erickLFLopes/cronos-kairos/master/doc/img/menu_v3.png)
 
-Após escolher o mês para geração do relatório a aplicação abrirá um modal de configurações, com as seguintes opções: 
+Após escolher o mês para geração do relatório a aplicação abrirá um modal de configurações: 
 
-![Modal de seleção](https://raw.githubusercontent.com/erickLFLopes/cronos-kairos/master/doc/img/modal_selecao_v2.png)
+* Caso não tenha feito a consulta do mês selecionado ainda:
 
-1 - Dias para exclusão: caso algum dia do mês não deva ser considerado para o cálculo de horas da semana, será possível informa-lo através deste primeiro campo. os dias neste campo devem estar separados por espaços, exemplo: 
+    ![Modal de seleção](https://raw.githubusercontent.com/erickLFLopes/cronos-kairos/master/doc/img/modal_selecao_v3.1.png)
+* Caso já tenha feito a consulta do mês selecionado: 
+
+    ![Modal de seleção](https://raw.githubusercontent.com/erickLFLopes/cronos-kairos/master/doc/img/modal_selecao_v3.png)
+
+Neste modal de configurações temos as seguintes opções
+1 - Configuração de carga horária: sabendo que alguns colegas possuem a carga horária de 44, ou mesmo outros com carga horária reduzidas podem fazer 30, deixamos uma opção de seleção que terá a possibilidade de seleção para as carga horarias semanais de: 44, 40 e 30.
+
+2 - Dias para exclusão: caso algum dia do mês não deva ser considerado para o cálculo de horas da semana, será possível informa-lo através deste primeiro campo. os dias neste campo devem estar separados por espaços, exemplo: 
 
 * Remover dias: 12 22 (estes dois dias serão excluídos do cálculo)
 * Remover dias: 12 35 (apenas o dia 12 será excluído do cálculo)
 
-2 - Configuração de carga horária: sabendo que alguns colegas possuem a carga horária de 44, ou mesmo outros com carga horária reduzidas podem fazer 30, deixamos uma opção de seleção que terá a possibilidade de seleção para as carga horarias semanais de: 44, 40 e 30.
-
-3 - caso o relatório já tenha sido buscado em algum momento, será possível utilizar a opção **Não, use da busca anterior** , caso não tenha os dados ainda é necessário fazer uma nova consulta. 
-
-* Note que: as configurações para uma nova busca são salvas, logo o relatório quando já tiver sido gerado não aceitará uma nova configuração de carga horaria ou exclusão de dias. 
+3 - Botões de geração do relatório: 
+* **Nova consulta**: utilizado para refazer as chamadas necessárias para o Kairos e atualizar dados do mês. 
+* **Usar consulta anterior**: caso o relatório já tenha sido buscado em algum momento, será possível utilizar esta opção, onde os dados já consultados serão utilizados. Note que: as configurações para uma nova busca são salvas, logo o relatório já gerado não aceitará uma nova configuração de carga horaria ou exclusão de dias. 
 
 Após as configurações, a aplicação abre um loader e da inicio a consulta do relatório. 
 
