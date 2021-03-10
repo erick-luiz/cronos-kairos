@@ -117,7 +117,11 @@
           visibility: visible;
           transform: scale(1.0);
           transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
-      }  
+      }
+
+      .select-hours {
+        padding: 0.1rem
+      }
     `;
 
     var errorMsgStyle = `
