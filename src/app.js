@@ -124,40 +124,33 @@ let generateReport = (searchData) => {
    
 }
 
-let validateLocalData = () => localStorage.getItem(`month-${reportMonth}`) != undefined && localStorage.getItem(`month-${reportMonth}`) != "null";
+let isValidateLocalData = () => localStorage.getItem(`month-${reportMonth}`) != undefined && localStorage.getItem(`month-${reportMonth}`) != "null";
 
 ConfirmationModalTemplate.comfirmInput.addEventListener("click", () => generateReport(true));
 ConfirmationModalTemplate.notComfirmInput.addEventListener("click", () => generateReport(false));
 
 let btn = viewManager.btnCurrentMonth;
-btn.addEventListener("click", function(){
+
+
+let showSearchModal = (month) => {
     reportMonth = month;
-    if(validateLocalData()){
-        ConfirmationModalTemplate.toggle();
+    if(isValidateLocalData()){
+        ConfirmationModalTemplate.toggleOldSearchBtn(true);
     }else{
-        generateReport(true);
+        ConfirmationModalTemplate.toggleOldSearchBtn(false);
     }
+    
+    ConfirmationModalTemplate.toggle();
+}
+
+btn.addEventListener("click", function(){
+    showSearchModal(cronosUtil.getCurrentMonth()); 
 });
 
-let btnLastMonth = viewManager.btnLastMonth;
-btnLastMonth.addEventListener("click", function(){
-    reportMonth = lastMonth;
-    if(validateLocalData()){
-        ConfirmationModalTemplate.toggle();
-    }else{
-        generateReport(true);
-    }
+viewManager.btnLastMonth.addEventListener("click", function(){ 
+    showSearchModal(cronosUtil.getLastMonth()); 
 });
 
-
-let btnTwiceLastMonth = viewManager.btnTwiceLastMonth;
-btnTwiceLastMonth.addEventListener("click", function(){
-    reportMonth = twiceLastMonth;
-    if(validateLocalData()){
-        ConfirmationModalTemplate.toggle();
-    }else{
-        generateReport(true);
-    }
+viewManager.btnTwiceLastMonth.addEventListener("click", function(){ 
+    showSearchModal(cronosUtil.getTwiceLastMonth()); 
 });
-
-
